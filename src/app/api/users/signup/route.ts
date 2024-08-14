@@ -10,7 +10,8 @@ export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
     const { username, email, password } = reqBody;
-    console.log(reqBody);
+    // console.log("reqBody",reqBody);
+    //reqBody { email: 'three@gmail.com', password: 'three', username: 'three' }
 
     //check if user already exists
     const user = await User.findOne({ email });
@@ -33,7 +34,16 @@ export async function POST(request: NextRequest) {
     });
 
     const savedUser = await newUser.save();
-    console.log(savedUser);
+    // console.log("savedUser",savedUser);
+    /*savedUser {
+  username: 'three',
+  email: 'three@gmail.com',
+  password: '$2a$10$S5CXBm/le.izd11pzSGZGOtq5Ceh/bni6du9N1fw/pmxkz2jwwuQ.',
+  isverified: false,
+  isAdmin: false,
+  _id: new ObjectId('66b9e6327da1df401c0fd76c'),
+  __v: 0
+}*/
 
     //send verification email
     await sendEmail({ email, emailType: "VERIFY", userId: savedUser._id });

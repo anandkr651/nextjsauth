@@ -4,7 +4,8 @@ import bcryptjs from "bcryptjs";
 
 export const sendEmail = async ({ email, emailType, userId }: any) => {
   try {
-    const hashedToken = await bcryptjs.hash(userId.toString(), 10);
+    const hashedToken = await bcryptjs.hash(userId.toString(), 10); //hashToken mi special character aata hai.
+    //we can use uuid inplace of hashToken because in uuid there is no special character.
 
     //configured mail for usage
     if (emailType === "VERIFY") {
@@ -27,8 +28,8 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
       host: "sandbox.smtp.mailtrap.io",
       port: 2525,
       auth: {
-       user: "f55bca96454944",
-       pass: "2a2f9dad32e5b1"
+        user: "f55bca96454944",
+        pass: "2a2f9dad32e5b1",
       },
     });
 
@@ -37,14 +38,8 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
       to: email, // list of receivers
       subject:
         emailType === "VERIFY" ? "Verify your email" : "Reset your password",
-      html: `<p>Click <a href="${
-        process.env.DOMAIN
-      }/verifyemail?token=${hashedToken}">here</a> 
-      to ${
-        emailType === "VERIFY" ? "verify your email" : "reset your password"
-      }or copy and paste the link below in your browser. <br> ${
-        process.env.DOMAIN
-      }/verifyemail?token=${hashedToken}
+      html: `<p>Click <a href="${process.env.DOMAIN}/verifyemail?token=${hashedToken}">here</a> 
+      to ${emailType === "VERIFY" ? "verify your email " : "reset your password"}or copy and paste the link below in your browser. <br> ${process.env.DOMAIN}/verifyemail?token=${hashedToken}
     </p>`,
     };
 

@@ -29,10 +29,12 @@ function SignUpPage() {
     try {
       setLoading(true);
       const response = await axios.post("/api/users/signup", user);
-      console.log("SignUp success", response.data);
+      // console.log("SignUp success", response);
+      /*SignUp success {config,data,headers,status,statusText}  */
+
       router.push("/login");
     } catch (error: any) {
-      console.log("Signup Failed");
+      // console.log("Signup Failed");
       toast.error(error.message);
     } finally {
       setLoading(false);
@@ -87,7 +89,9 @@ function SignUpPage() {
       />
       <button
         onClick={onSignup}
-        className={`p-2 border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 bg-slate-700 ${buttondisabled ? 'cursor-not-allowed opacity-55' : ''}`}
+        className={`p-2 border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 bg-slate-700 ${
+          buttondisabled ? "cursor-not-allowed opacity-55" : ""
+        }`}
         disabled={buttondisabled}
       >
         {buttondisabled ? "Please fill the form" : "signup"}

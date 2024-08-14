@@ -10,8 +10,8 @@ export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
     const { email, password } = reqBody;
-    console.log(reqBody);
-    
+    // console.log(reqBody);
+
     //validation
     const user = await User.findOne({ email });
     if (!user) {
@@ -20,18 +20,17 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-
-    console.log("User exits");
+    // console.log("User exits");
 
     const validPassword = await bcryptjs.compare(password, user.password);
     if (!validPassword) {
       return NextResponse.json(
-        { error: "check your credential" },
+        { error: "check your credential" }, //credential means check the password is right or wrong
         { status: 400 }
       );
     }
 
-    const tokenData = {
+    const tokenData = {  //data is also called as payload.
       id: user._id,
       username: user.username,
       email: user.email,
@@ -46,7 +45,7 @@ export async function POST(request: NextRequest) {
     });
 
     response.cookies.set("token", token, {
-      httpOnly: true,
+      httpOnly: true, //user does not manuplate the token only server can manuplate it.
     });
     return response;
   } catch (error: any) {

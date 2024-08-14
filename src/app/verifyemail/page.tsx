@@ -15,7 +15,7 @@ export default function VerifyEmailPage() {
       setError(false);
     } catch (error: any) {
       setError(true);
-      console.log(error.response.data);
+      // console.log(error.response.data);
     }
   };
 
@@ -26,7 +26,7 @@ export default function VerifyEmailPage() {
 
     //  const { query } = router;
     //  const urlTokenTwo = query.token
-  }, []);
+  },[]);
 
   useEffect(() => {
     setError(false);
